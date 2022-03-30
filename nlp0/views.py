@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import OriginalText, SummaryText
-#from transformers import AutoModelWithLMHead, AutoTokenizer
+from transformers import AutoModelWithLMHead, AutoTokenizer
 import os
 import sys
 
@@ -13,7 +13,7 @@ def index(request):
 
     if request.POST:
         deb = "hello"
-        if "original_text" in requet.POST:
+        if "original_text" in request.POST:
             original_text = request.POST["original_text"]
 
             tokenizer = AutoTokenizer.from_pretrained("t5-base")
