@@ -1,36 +1,34 @@
 from django.shortcuts import render
 from .models import OriginalText, SummaryText
-from transformers import AutoModelWithLMHead, AutoTokenizer
-import os
-import sys
-
+from .forms import LangForm
+from transformers import AutoModelWithLMHead, AutoTokenizer, AutoModelForSeq2SeqLM
 
 def index(request):
 
     original_text = ""
     summary_text = ""
-    deb = "hello"
 
     if request.POST:
         deb = "hello"
         if "original_text" in request.POST:
             original_text = request.POST["original_text"]
+            lang_form = LangForm(request.POST)
+            if lang_form.is_valid():
+                which_lang = request.POST["which_lang"]
 
-            tokenizer = AutoTokenizer.from_pretrained("t5-base")
-            model = AutoModelWithLMHead.from_pretrained("t5-base")
-            inputs = tokenizer.encode("summarize:" + original_text, return_tensors="pt", truncation=True)
-            summary_ids = model.generate(inputs, max_length=200, num_beams=4, early_stopping=True)
+            fine_tuned_model = "./run_summarization_saved" if which_lang == "japanese" else "t5-base"
+
+            tokenizer = AutoTokenizer.from_pretrained(fine_tuned_model)
+            model = AutoModelForSeq2SeqLM.from_pretrained(fine_tuned_model)
+
+            inputs = tokenizer.encode("summarize:" + original_text, return_tensors="pt", truncation=False)
+            summary_ids = model.generate(inputs, max_length=1024, num_beams=20, early_stopping=False)
             generate_text = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
             
             summary_text = generate_text[0]
         else:
             summary_text = original_text
         
-        return render(request, 'nlp0/index.html', {'original_text':original_text, 'summary_text':summary_text, 'deb':deb})
+        return render(request, 'nlp0/index.html', {'original_text':original_text, 'summary_text':summary_text, 'lang_form': lang_form})
 
-    return render(request, 'nlp0/index.html', {'original_text':original_text, 'summary_text':summary_text, 'deb':deb})
-    # original_text = OriginalText.objects.order_by('-date')[:5]
-    # summary_text = SummaryText.objects.order_by('-date')[:5]
-    # context = {'original_text': original_text, 'summary_text': summary_text}
-    # return render(request, 'nlp0/index.html', context)
-
+    return render(request, 'nlp0/index.html', {'original_text':original_text, 'summary_text':summary_text, 'lang_form': LangForm()})

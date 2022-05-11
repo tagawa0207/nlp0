@@ -5,23 +5,21 @@ Text Summarization
 {% endblock title %}
 
 {% block header %}
-Text Summarization
+<container>
+    Text Summarization
+</container>
 {% endblock header %}
 
 {% block content %}
 
-<br>
-deb = {{deb}}
-<br>
-orignal_text = {{original_text}}
-<br>
-summary_text = {{summary_text}}
-
-<form action="{% url 'nlp0:index' %}" method="post">
-    {% csrf_token %}
-    <textarea class="form-control" name="original_text" id="exampleFormControlTextarea1" rows="3" placeholder="Write a large text here ...">{% if original_text %}{{original_text}}{% endif %}</textarea>
-    <button type="submit" class="btn btn-primary" value="1">Summarize this</button>
-</form>
+<container>
+    <form action="{% url 'nlp0:index' %}" method="post">
+        {% csrf_token %}
+        {{ lang_form }}
+        <textarea class="form-control" name="original_text" id="exampleFormControlTextarea1" rows="3" placeholder="Write a large text here ...">{% if original_text %}{{original_text}}{% endif %}</textarea>
+        <button type="submit" class="btn btn-primary my-3" value="1">Summarize this</button>
+    </form>
+</container>
 
 {% if summary_text %}
     <textarea class="container" name="summary_text" id="exampleFormControlTextarea1" rows="3" placeholder="Write a large text here ...">{{summary_text}}</textarea>
