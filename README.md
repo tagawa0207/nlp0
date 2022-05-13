@@ -12,6 +12,7 @@
   - Bootstrap4
 - 機械学習フレームワーク
   - Hugging Face
+  - T5
 - RDB
   - MySQL
 - クラウド
