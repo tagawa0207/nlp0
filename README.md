@@ -3,7 +3,7 @@
 [デモサイト on AWS](http://35.73.73.242/nlp0/)
 ![画像名](https://github.com/tagawa0207/nlp0/blob/main/image/demo.gif)
 
-# 環境/構成
+# 構成
 
 ![画像名](https://github.com/tagawa0207/nlp0/blob/main/image/config.png)
 
@@ -24,6 +24,7 @@
 - その他
   - Terraform
   - Docker
+  - CUDA
 
 ## 参考サイト
 
