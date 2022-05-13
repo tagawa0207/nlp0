@@ -17,9 +17,7 @@
   - MySQL
 - クラウド
   - AWS
-    - VPC
-    - EC2
-    - RDS
+    - VPC, EC2, RDS
 - その他
   - Terraform
   - Docker
