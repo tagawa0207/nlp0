@@ -11,7 +11,7 @@
   - Django
   - Bootstrap4
 - 機械学習フレームワーク
-  - Hugging Face
+  - Hugging Face (Transformers)
   - T5
 - RDB
   - MySQL
