@@ -5,7 +5,7 @@
 
 # 環境/構成
 
-![画像名](https://github.com/tagawa0207/nlp0/blob/main/image/config.gif)
+![画像名](https://github.com/tagawa0207/nlp0/blob/main/image/config.png)
 
 ## 適用技術
 - 言語
