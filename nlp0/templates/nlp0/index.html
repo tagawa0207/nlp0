@@ -5,30 +5,23 @@ Text Summarization
 {% endblock title %}
 
 {% block header %}
-<container>
+<h3 class="text-center">
     Text Summarization
-</container>
+</h3>
 {% endblock header %}
 
 {% block content %}
 
-<container>
-    <form action="{% url 'nlp0:index' %}" method="post">
-        {% csrf_token %}
-        {{ lang_form }}
-        <textarea class="form-control" name="original_text" id="exampleFormControlTextarea1" rows="10" placeholder="Write a large text here ...">{% if original_text %}{{original_text}}{% endif %}</textarea>
-        <button type="submit" class="btn btn-primary my-3" value="1">Summarize this</button>
-    </form>
-</container>
+
+<form action="{% url 'nlp0:index' %}" method="post">
+    {% csrf_token %}
+    {{ lang_form }}
+    <textarea class="form-control" name="original_text" id="exampleFormControlTextarea1" rows="10" placeholder="Write a large text here ...">{% if original_text %}{{original_text}}{% endif %}</textarea>
+    <button type="submit" class="btn btn-primary my-3" value="1">Summarize this</button>
+</form>
 
 {% if summary_text %}
     <textarea class="container" name="summary_text" id="exampleFormControlTextarea1" rows="3" placeholder="Summary will be here ...">{{summary_text}}</textarea>
 {% endif %}
-
-
-
-
-
-
 
 {% endblock %}

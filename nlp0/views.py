@@ -2,6 +2,13 @@ from django.shortcuts import render
 from .models import OriginalText, SummaryText
 from .forms import LangForm
 from transformers import AutoModelWithLMHead, AutoTokenizer, AutoModelForSeq2SeqLM
+import spacy
+
+def deldup_jp(text):
+    ginza = spacy.load("ja_ginza")
+    sents = [sent.text for sent in ginza(text).sents]
+    sents = list(dict.fromkeys(sents))
+    return "".join(sents)
 
 def index(request):
 
@@ -9,7 +16,7 @@ def index(request):
     summary_text = ""
 
     if request.POST:
-        deb = "hello"
+
         if "original_text" in request.POST:
             original_text = request.POST["original_text"]
             lang_form = LangForm(request.POST)
@@ -25,7 +32,7 @@ def index(request):
             summary_ids = model.generate(inputs, max_length=1024, num_beams=20, early_stopping=False)
             generate_text = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
             
-            summary_text = generate_text[0]
+            summary_text = deldup_jp(generate_text[0]) if which_lang == "japanese" else generate_text[0]
         else:
             summary_text = original_text
         
