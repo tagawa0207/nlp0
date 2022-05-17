@@ -29,7 +29,7 @@ def index(request):
             model = AutoModelForSeq2SeqLM.from_pretrained(fine_tuned_model)
 
             inputs = tokenizer.encode("summarize:" + original_text, return_tensors="pt", truncation=False)
-            summary_ids = model.generate(inputs, max_length=1024, num_beams=20, early_stopping=False)
+            summary_ids = model.generate(inputs, max_length=2048, num_beams=20, early_stopping=False)
             generate_text = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
             
             summary_text = deldup_jp(generate_text[0]) if which_lang == "japanese" else generate_text[0]
