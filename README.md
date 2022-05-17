@@ -27,4 +27,5 @@
   - CUDA
 
 ## 参考サイト
-
+https://tech.retrieva.jp/entry/2021/11/24/183232
+事前学習モデルT5とTransformersを使ってお手軽日本語文書要約をやってみた
