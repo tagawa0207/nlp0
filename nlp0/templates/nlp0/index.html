@@ -1,5 +1,7 @@
 {% extends 'nlp0/base.html' %}
 
+{% load static %}
+
 {% block title %}
 Text Summarization
 {% endblock title %}
@@ -17,11 +19,30 @@ Text Summarization
     {% csrf_token %}
     {{ lang_form }}
     <textarea class="form-control" name="original_text" id="exampleFormControlTextarea1" rows="10" placeholder="Write a large text here ...">{% if original_text %}{{original_text}}{% endif %}</textarea>
-    <button type="submit" class="btn btn-primary my-3" value="1">Summarize this</button>
+    <button type="submit" class="btn btn-primary my-3 before_summarize" value="1">Summarize this</button>
+    <button type="button" class="btn btn-primary my-3 after_summarize" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Summarizing
+    </button>
 </form>
 
 {% if summary_text %}
     <textarea class="container" name="summary_text" id="exampleFormControlTextarea1" rows="3" placeholder="Summary will be here ...">{{summary_text}}</textarea>
 {% endif %}
 
-{% endblock %}
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(function(){
+        $('.after_summarize').hide();
+        $('.before_summarize').click(function(){
+            $('.after_summarize').show();
+            $('.before_summarize').hide();
+        });
+    });
+</script>
+{% endblock js %}
+
+
+
